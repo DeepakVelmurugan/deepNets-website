@@ -1,4 +1,5 @@
 from flask import Flask, url_for, render_template, request, redirect,session
+import requests
 
 app = Flask(__name__)
 
@@ -16,6 +17,7 @@ def conv():
     
 @app.route('/about',methods=["GET"])
 def about():
+    request = requests.get(url='https://virtual-data-scientist.herokuapp.com')
     return render_template('about.html')
 if __name__ == '__main__' :
     app.run(debug=True)
