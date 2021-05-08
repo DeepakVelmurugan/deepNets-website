@@ -1,0 +1,450 @@
+{% extends 'base.html' %}
+<head>
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+        * {
+        margin: 0;
+        padding: 0;
+        }
+
+        :root {
+        --secondary-color: white;
+        --contrast-color: rgb(179, 39, 39);
+        }
+        .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        z-index: -10;
+        background-color: var(--contrast-color);
+        }
+
+        .container {
+        display: flex;
+        height: 100vh;
+        justify-content: space-around;
+        align-items: center;
+        color: #fff;
+        animation: expand .8s ease forwards;
+        background-color: var(--secondary-color);
+        position: relative;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        transition: all .8s ease;
+        }
+
+        .container_content {
+        width: 50%;
+        }
+
+        .container_content_inner {
+        width: 80%;
+        margin-left: 80px;
+        }
+
+        .container_outer_img {
+        margin: 50px;
+        width: 50%;
+        overflow: hidden;
+        }   
+            
+        .container_img {
+        width: 100%;
+        animation: slideIn 1.5s ease-in-out forwards;
+        }
+
+        .par {
+        height: auto;
+        overflow: hidden;
+        }
+
+        .par p{
+        color: black;
+        line-height: 28px;
+        transform: translateY(300px);
+        animation: slideUp .8s ease-in-out forwards .8s;
+        }
+
+        .btns {
+        height: 100%;
+        position: relative;
+        width: 150px;
+        overflow: hidden;
+        }
+
+        .btns_more {
+        background: transparent;
+        border: 1px solid var(--contrast-color);
+        border-radius: 50px;
+        padding: 8px 12px;
+        color: rgb(179, 39, 39);;
+        font-size: 16px;
+        text-transform: uppercase;
+        position: relative;
+        margin-top: 15px;
+        outline: none;
+        transform: translateY(50px);
+        animation: slideUp .8s ease-in-out  forwards 1s;
+        }
+
+        .title {
+        overflow: hidden;
+        height: auto;
+        }
+
+        h1 {
+            font-size: 30px;
+            color: var(--contrast-color);
+            margin-bottom: 20px;
+            transform: translateY(100px);
+            animation: slideUp .8s ease forwards .5s;
+        }
+
+        @keyframes slideIn {
+        0% {
+            transform: translateX(500px) scale(.2);
+        }
+        100% {
+            transform: translateX(0px) scale(1);
+        }
+        }
+
+        @keyframes slideUp {
+        0% {
+            transform: translateY(300px);
+        }
+        100% {
+            transform: translateY(0px);
+        }
+        }
+
+        @keyframes expand {
+        0% {
+            transform: translateX(1400px);
+        }
+        100% {
+            transform: translateX(0px);
+        }
+        }
+
+        .second {
+            width: 100%;
+            height: 1000px;
+            background-color: black;
+            align-items: center;
+            padding: 0 45px;            
+        }
+
+        .second h1{
+            font-family: Snell Roundhand, cursive;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            transform: translateY(300px);
+            animation: slideUp .8s ease-in-out forwards .8s;
+        }
+
+        /* Cards */
+        .column {
+        display:inline-block;   
+        padding: 0px 40px 15px;
+        transform: translateY(300px);
+        animation: slideUp .8s ease-in-out forwards .8s;
+        }
+        .columnInfo {
+        display:inline-block;
+        align-items: center;
+        padding: 0px 20px 15px;
+        transform: translateY(300px);
+        animation: slideUp .8s ease-in-out forwards .8s;
+        }
+        /* Remove extra left and right margins, due to padding */
+        .row {margin: 0 -5px;}
+
+        /* Clear floats after the columns */
+        .row:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+
+        /* Style the counter cards */
+        .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 30px;
+        padding:0px 10px;
+        color: white;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        background: rgb(51, 49, 49)
+        }
+
+        .cardInfo {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 30px;
+        padding: 16px;
+        color: white;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        background: rgb(51, 49, 49)
+        }
+
+        /*feature Card heading */
+        .featureCard{
+            text-align: center;
+            font-size: 20px;
+        }
+        /* Bullet points inside */
+        .row ul.checkmark li {
+        font-size: 20px;
+        margin-bottom: 1em;
+        list-style-type: none;
+        padding: 0.25em 0 0 2.5em;
+        position: relative;
+        }
+        .row ul.checkmark li:before {
+        content: " ";
+        display: block;
+        border: solid 0.8em rgb(85, 243, 85);
+        border-radius: 0.8em;
+        height: 0;
+        width: 0;
+        position: absolute;
+        left: 0.5em;
+        top: 40%;
+        margin-top: -0.5em;
+        }
+        .row ul.checkmark li:after {
+        content: " ";
+        display: block;
+        width: 0.3em;
+        height: 0.6em;
+        border: solid #fff;
+        border-width: 0 0.2em 0.2em 0;
+        position: absolute;
+        left: 1em;
+        top: 40%;
+        margin-top: -0.2em;
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+        }
+        .checkmark a {
+            font-size: 20px;
+            text-decoration: none;
+            color: white;
+        }
+        .checkmark a:hover{
+            color: green;
+        }
+ 
+        /* typing animation */
+        .infobelow {
+        overflow: hidden;
+        white-space: nowrap;
+        margin-top: 30px;
+        font-size: 20px;
+        border-right: 1px solid black;
+        animation: blink-caret 0.6s step-end infinite, type 7s steps(70, end);
+        }
+
+        .infobelow p{
+            font-size: 10px;
+            color: white;
+        }
+
+        @keyframes blink-caret {
+        0%, 100% {border-color: transparent;text-align: center;}
+        50% {border-color: white;}
+        }
+
+        @keyframes type {
+        0% {width: 0;}
+        100% {width: 100%}
+        }
+        /*footer animation */
+        .site-footer{
+            width: 100%;
+            padding: 0 45px;
+            background-color: black; 
+            bottom:0;
+        }
+        .forkPart{
+            display: none;
+        }
+        .flex-center {
+        width: 100%;
+        min-height: 10vh;
+        background: #000;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        }
+        .flex-center a{
+            text-decoration: none;
+        }
+
+        .icon-3d {
+        padding: 10px;
+        -webkit-animation: icon3d 200ms 10;
+        animation: icon3d 200ms 10;
+        color: #fff;
+        -webkit-animation: icon3d 200ms infinite;
+        animation: icon3d 200ms infinite;
+        }
+
+        @keyframes icon3d {
+        0% {
+            text-shadow: 5px 4px #f44336, -5px -6px #2196f3;
+        }
+        25% {
+            text-shadow: -5px -6px #f44336, 5px 4px #2196f3;
+        }
+        50% {
+            text-shadow: 5px -4px #f44336, -8px 4px #2196f3;
+        }
+        75% {
+            text-shadow: -8px -4px #f44336, -5px -4px #2196f3;
+        }
+        100% {
+            text-shadow: -5px 0 #f44336, 5px -4px #2196f3;
+        }
+        }
+        /* for big displays */
+        @media only screen and (min-width: 1024px) {
+            h1 {
+                font-size: 40px;
+            }
+            .column {
+                display: flex;
+                float: left;
+                align-items: center;
+                padding: 0px 180px 50px;
+            }
+            .columnInfo {
+                width: 73%;
+                padding: 0px 180px 15px;
+            }
+            .featureCard{
+                padding: 5px;
+                text-align: center;
+                font-size: 30px;
+            }
+            .checkmark a {
+            font-size: 25px;
+            text-decoration: none;
+            color: white;
+            }
+            .infobelow p{
+            font-size: 30px;
+            color: white;
+            }
+            .forkPart{
+            display: block;
+            }
+            .row ul.checkmark li {
+                font-size: 25px;
+            }
+        }
+</style>
+</head>
+<body>
+    <div class= 'container'>
+        <div class="container_content">
+        <div class="container_content_inner">
+        <div class="title">
+          <h1>deepNets</h1>
+        </div>
+        <div class="par">
+        <p>
+            A framework for deep learning vision tasks , it so easy to use that a simple knowledge of python syntax is enough. 
+            Just push the layers in the order of which you want while the rest will be taken care by deepNets. </br>
+            Simple as that!
+        </p>
+        </div>
+        <div class="btns">
+        <button class='btns_more' type="button"> See more </button>
+        </div>
+        </div>
+        </div>
+         <div class="container_outer_img">
+            <div class="img-inner">
+                <img src='https://i.postimg.cc/QCvT3yD0/deep-Nets-Without-BG.png'  alt="deepNets" class="container_img"/>
+            </div>
+        </div>
+        </div>
+        <div class="overlay"></div>
+        <div class="second">
+            <h1 style="text-align: center;"><i>Features</i></h1>
+            <div class="row">
+                <div class="column">
+                    <div class="card">
+                        <h2 class="featureCard">Fully connected layers</h2>
+                        </br>
+                        <ul class="checkmark">
+                            <li><a href="http://127.0.0.1:5000/fc#input">Input layer</a></li>
+                            <li><a href="http://127.0.0.1:5000/fc#relu">ReLU layer</a></li>
+                            <li><a href="http://127.0.0.1:5000/fc#batch">Batch Normalization layer</a></li>
+                            <li><a href="http://127.0.0.1:5000/fc#layer">Layer Normalization layer</a></li>
+                            <li><a href="http://127.0.0.1:5000/fc#loss">Loss layer</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card">
+                        <h2 class="featureCard">Convolutional layers</h2>
+                        </br>
+                        <ul class="checkmark">
+                            <li><a href="http://127.0.0.1:5000/conv#input">Input layer</a></li>
+                            <li><a href="http://127.0.0.1:5000/conv#conv">Conv layer</a></li>
+                            <li><a href="http://127.0.0.1:5000/conv#pool">Pooling layer</a></li>
+                            <li><a href="http://127.0.0.1:5000/conv#loss">Loss layer</a></li>
+                            <li><a href="http://127.0.0.1:5000/conv#trainer">Trainer</a></li> 
+                        </ul>
+                    </div>
+                </div>
+                <div class="columnInfo">
+                    <div class="cardInfo">
+                        <div class="infobelow">
+                            <p>deepNets only uses python ✅ and doesn't depend on other frameworks 😏</p>
+                        </div>
+                        <div class="infobelow">
+                            <p>Easy installation -- Free to use -- Open Source -- Well takes only 3.9MB 🤯</p>                            
+                        </div>
+                        <div class="infobelow">
+                            <p>Installation : pip install deepNets</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+        </div>
+        <footer class="site-footer">
+            <div class="flex-center">
+                <img class="forkPart" src="https://i.postimg.cc/kXdmNcXg/Screen-Shot-2021-04-30-at-8-44-29-PM-removebg-preview.png" alt=""/>
+                <a class="fa fa-github fa-3x icon-3d" href="https://github.com/DeepakVelmurugan/deepNets"></a>
+              </div>
+        </footer>
+        <script>
+        
+            $("button").click(function() {
+            $('html,body').animate({
+                scrollTop: $(".second").offset().top},
+                'slow');
+        });
+        </script> 
+{% endblock %}
+</body>
+

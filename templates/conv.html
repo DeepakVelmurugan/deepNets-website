@@ -1,0 +1,505 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/vs.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        .inner-navbar ul {
+        align-items: center;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: greenyellow;
+        }
+        .buttontype{
+            background: transparent;
+            border: 1px solid greenyellow;
+            font-size: 15px;
+            color: black;
+            position: relative;
+            outline: none;
+        }
+        .inner-navbar li {
+            float: left;
+            padding: 10px 115px;
+            display: block;
+            color: black;
+            position: relative;
+            text-decoration: none;
+            transition: 0.5s;
+        }
+
+        .inner-navbar li::after{
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 4px;
+            top: 0%;
+            left: 0;
+            background:rgb(3, 40, 250);
+            transition: transform 0.5s;
+            transform: scaleX(0);
+            transform-origin: right;
+        }
+
+        .inner-navbar li:hover {
+            color:black;            
+        }
+
+        .inner-navbar li:hover::after{
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        .Input{
+            width:100%;
+            height: 400px;
+            padding: 10px;
+            align-items: center;
+            background-color: white;
+        }
+        .Input h1{
+            text-align: center;
+            font-size: 30px;
+            color:black;
+        }
+        .Pool{
+            width:100%;
+            height: 550px;
+            padding: 10px;
+            align-items: center;
+            background-color: white;
+        }
+        .Pool h1{
+            text-align: center;
+            font-size: 30px;
+            color:black;
+        }
+        .Trainer{
+            width:100%;
+            height: 700px;
+            padding: 10px;
+            align-items: center;
+            background-color: whitesmoke;
+        }
+        .Trainer h1{
+            text-align: center;
+            font-size: 30px;
+            color:black;
+        }
+        .Convolutional{
+            width:100%;
+            height: 600px;
+            padding: 10px;
+            align-items: center;
+            color: white;
+            background-color: rgb(179, 39, 39);
+        }
+        .Convolutional h1{
+            text-align: center;
+            font-size: 30px;
+            color:white;
+        }
+        .Loss{
+            width:100%;
+            height: 500px;
+            padding: 10px;
+            align-items: center;
+            color: white;
+            background-color: black;
+        }
+        .Loss h1{
+            text-align: center;
+            font-size: 30px;
+            color:rgb(179, 39, 39);
+        }
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+        .sticky + .content{
+            padding-top: 65px;
+        }
+        @media screen and (max-width: 1024px){
+            .Input,.ReLU,.Loss,.Trainer,.Convolutional{
+                height: 700px;
+            }
+        }
+        /* HR animation */
+        hr {
+        width: 0%;
+        min-width: 20%;
+        max-width: 100%;
+        margin: 0 auto;
+        border: none;
+        position: relative;
+        transition: box-shadow 200ms ease-in-out;
+        box-shadow: 0px 0px 0px 0px #f9f9f9;
+        }
+
+        hr.activated {
+        opacity: 1;
+        }
+
+        .trans--grow{
+        -webkit-transition: width 1s ease-out; /* For Safari 3.1 to 6.0 */
+        transition: width 1s  ease-out;
+        width : 0%;
+        }
+        .grow{
+        width:100%;
+        }
+        .hr1{
+        margin-left:0;
+        }
+        .hr2{
+        margin-right:0;
+        }
+        /* h2 style */
+        h2 {
+            text-align: center;
+        }
+        /* Documentation */
+        .Input .par{
+            padding-top: 15px;
+            display: inline-block;
+            font-size: 18px;          
+        }
+        .Input .parameters li::before{
+            content: "►";
+        }
+        .Input .parameters .datatype{
+            color:red;
+        }
+        .Input .parameters .param{
+            font-weight: bold;
+        }
+        .Convolutional .par{
+            padding-top: 15px;
+            display: inline-block;
+            font-size: 18px;          
+        }
+        .Convolutional .parameters li::before{
+            content: "►";
+        }
+        .Convolutional .parameters .datatype{
+            color:greenyellow;
+        }
+        .Convolutional .parameters .param{
+            font-weight: bold;
+        }
+        .Pool .par{
+            padding-top: 15px;
+            display: inline-block;
+            font-size: 18px;          
+        }
+        .Pool .parameters li::before{
+            content: "►";
+        }
+        .Pool .parameters .datatype{
+            color:red;
+        }
+        .Pool .parameters .param{
+            font-weight: bold;
+        }
+        .Loss .par{
+            padding-top: 15px;
+            display: inline-block;
+            font-size: 18px;          
+        }
+        .Loss .parameters li::before{
+            content: "►";
+        }
+        .Loss .parameters .datatype{
+            color:red;
+        }
+        .Loss .parameters .param{
+            font-weight: bold;
+        }
+        .Trainer .par{
+            padding-top: 15px;
+            display: inline-block;
+            font-size: 18px;          
+        }
+        .Trainer .parameters li::before{
+            content: "►";
+        }
+        .Trainer .parameters .datatype{
+            color:red;
+        }
+        .Trainer .parameters .param{
+            font-weight: bold;
+        }
+        .Trainer .parameters .update-rules li::before{
+            padding-left: 10px;
+        }
+    </style> 
+</head>
+<body>
+    <div class="inner-navbar">
+        <ul>
+            <li><button class="buttontype" id="input" type="button">Input</button></li>
+            <li><button class="buttontype" id="Conv" type="button">Convolutional</button></li>
+            <li><button class="buttontype" id="Pool" type="button">Pool</button></li>
+            <li><button class="buttontype" id="Loss" type="button">Loss</button></li>
+            <li><button class="buttontype" id="Trainer" type="button">Trainer</button></li>
+          </ul>
+    </div>
+    <div class="content">
+        <div class="Input" id="input">
+            <h1>Input layer</h1>
+                <pre>
+                <code class="python">
+                    #Code:
+                    layers = [] #Empty list to insert our layers
+                    layers.append({"layer_type":"input","inp":x}) # note layer_type -> input
+                </code>
+                </pre>
+                <hr class="trans--grow hr1" size="4" width="100%" color="black">
+                <h2>Explanation</h2>
+                <hr class="trans--grow hr2" size="4" width="100%" color="red">
+                <div class="par">
+                <p>
+                    The input layer defines the user input for convolutional layers, it requires input of size NxD where N is the number of inputs and D is the dimensions. 
+                    For example D is in this format D.shape = 3x32x32 (number of color channels x height x width) . Dimensions should always be in the specified way or you might end up with different scores.
+                </p>
+                <br>
+                <h4 style="padding-bottom: 10px;">Parameters:</h4>
+                <ul class="parameters">
+                    <li><span class="param">layer_type</span><span class="datatype">(String)</span> - input keyword is required since it's the input layer. Make sure the first layer is always the input layer.</li>
+                    <li><span class="param">inp</span><span class="datatype">(Numpy arr)</span> - This is your input that your feeding in the shape of NxD. Make sure it's a numpy array.</li>
+                </ul>
+                </div>
+        </div>
+        <div class="Convolutional" id="conv">
+            <h1>Convolutional layer</h1>
+            <pre>
+                <code class="python">
+                    #Code:
+                    layers = [] #Empty list to insert our layers
+                    layers.append({"layer_type":"input","inp":x}) # note layer_type -> input
+                    layers.append({"layer_type":"conv","filters":16,"filter_size":5,"padding":2,"stride":2}) #conv layer tends to have these parameters
+                </code>
+                </pre>
+                <hr class="trans--grow hr1" size="4" width="100%" color="black">
+                <h2>Explanation</h2>
+                <hr class="trans--grow hr2" size="4" width="100%" color="red">
+                <div class="par">
+                <p>
+                    Since it's impractical to connect all neurons to the input layer if it is high dimensional (like images) ,we will connect each neuron to a particular region of input volume.
+                    This is regarded as the basis for convolutional layers and it's one of the most powerfull layers in neural nets. There are a number of hyperparameters required for convolutional layers.
+                    The filter_size is nothing but a 2d matrix of size MxM where M - is the filter_size , using this filter we essentially convolve/slide along the input/previous layer and compute the dot products between weights and input.
+                    The amount by which we convolve is determined by stride (by default stride = 1). When we use conv layers we tend to decrease the input size and to preserve the volume spacially we use something called padding.
+                    Padding pads zeros in all sides of our input. Filters is nothing but the numbers of filters we want to use. 
+                </p>
+                <br>
+                <h4 style="padding-bottom: 10px;">Parameters:</h4>
+                <ul class="parameters">
+                    <li><span class="param">layer_type</span><span class="datatype">(String)</span> - conv keyword is required denoting it's a convolutional layer.</li>
+                    <li><span class="param">filters</span><span class="datatype">(Int)</span> - Determines the number of filters.</li>
+                    <li><span class="param">filter_size</span><span class="datatype">(Int)</span> - Size of each of your filters.</li>
+                    <li><span class="param">padding</span><span class="datatype">(Int)</span> - Amount of padding to be done <i>in all directions</i>.</li>
+                    <li><span class="param">stride</span><span class="datatype">(Int)</span> - Stride tells the amount by which you want to slide your filters</li>
+                </ul>
+                </div>
+        </div>
+        <div class="Pool" id="pool">
+            <h1>Pooling layer</h1>
+                <pre>
+                <code class="python">
+                    #Code:
+                    layers = [] #Empty list to insert our layers
+                    layers.append({"layer_type":"input","inp":x}) # note layer_type -> input
+                    layers.append({"layer_type":"conv","filters":16,"filter_size":5,"padding":2,"stride":2}) #conv layer tends to have these parameters
+                    layers.append({"layer_type":"pool","filter_size":2,"stride":2}) #pooling layer
+                </code>
+                </pre>
+                <hr class="trans--grow hr1" size="4" width="100%" color="black">
+                <h2>Explanation</h2>
+                <hr class="trans--grow hr2" size="4" width="100%" color="red">
+                <div class="par">
+                <p>
+                    Pooling layers are generally inserted between conv layers to reduce the spacial size of representation, to reduce amount of parameters, to reduce the computation of the network and hence also control overfitting.
+                    In deepNets max pooling operation is performed which is found to perform better in practice.<br>
+                    If we use a filter of size 2 then it scales like this:
+                    <img src="https://i.postimg.cc/Bv9ZBtQP/Screen-Shot-2021-05-07-at-8-21-33-AM.png" alt="pool" width="12%"/>
+                </p>
+                <br>
+                <h4 style="padding-bottom: 10px;">Parameters:</h4>
+                <ul class="parameters">
+                    <li><span class="param">layer_type</span><span class="datatype">(String)</span> - conv keyword is required denoting it's a convolutional layer.</li>
+                    <li><span class="param">filter_size</span><span class="datatype">(Int)</span> - Size of each of your filters.</li>
+                    <li><span class="param">stride</span><span class="datatype">(Int)</span> - Stride tells the amount by which you want to slide your filters.</li>
+                </ul>
+                </div>
+        </div>
+        <div class="Loss" id="loss">
+            <h1>Loss layer</h1>
+                <pre>
+                <code class="python">
+                    #Code:
+                    layers = [] #Empty list to insert our layers
+                    layers.append({"layer_type":"input","inp":x}) # note layer_type -> input
+                    layers.append({"layer_type":"conv","filters":16,"filter_size":5,"padding":2,"stride":2}) #conv layer tends to have these parameters
+                    layers.append({"layer_type":"pool","filter_size":2,"stride":2}) #pooling layer
+                    layers.append({"layer_type":"loss","num_classes":10}) # note layer_type -> loss
+                </code>
+                </pre>
+                <hr class="trans--grow hr1" size="3" width="100%" color="red"><h2>Explanation</h2><hr class="trans--grow hr2" size="3" width="100%" color="white">
+                <div class="par">
+                    <p>
+                        The last layer is always the loss layer. This layer by default uses the softmax classifier to calculate the loss which gives the normalized class probablities. 
+                        It is mostly preferred in binary classification. The number of classes denotes the different classes that you need to predict.<br>
+                        Refer this formula for softmax/cross-entropy loss:
+                        <img src="https://i.postimg.cc/Y9nxwTX1/Screen-Shot-2021-05-06-at-8-20-40-AM.png" alt="softmax" width="10%"/>
+                        <h4 style="padding-bottom: 10px; padding-top: 10px;">Parameters:</h4>
+                        <ul class="parameters">
+                            <li><span class="param">layer_type</span><span class="datatype">(String)</span> - loss keyword is required denoting the loss layer. Make sure that the last layer is always the loss layer.</li>
+                            <li><span class="param">num_classes</span><span class="datatype">(Int)</span> - denotes the number of classes you need for prediction.</li>
+                        </ul> 
+                    </p>
+                </div>
+        </div>
+        <div class="Trainer" id="trainer">
+            <h1>Trainer</h1>
+                <pre>
+                <code class="python">
+                    #Code:
+                    from deepNets import Net as nt
+                    from deepNets import Trainer as trn 
+                    layers = [] #Empty list to insert our layers
+                    layers.append({"layer_type":"input","inp":x}) # note layer_type -> input
+                    layers.append({"layer_type":"conv","filters":16,"filter_size":5,"padding":2,"stride":2}) #conv layer tends to have these parameters
+                    layers.append({"layer_type":"pool","filter_size":2,"stride":2}) #pooling layer
+                    layers.append({"layer_type":"loss","num_classes":10}) # note layer_type -> loss
+                    net = nt.Net() #Create the network
+                    net.makeLayers(layers) #This layer initializes your weights and other parameters
+                    trainer = trn.Trainer(net,x,y,(x_val,y_val),update_rule="rmsprop",lr_decay=0.95,optim_config={'learning_rate':0.001},batch_size=100,verbose=True) #deepNets trainer to train your network
+                    trainer.train() #Call train method for training
+                </code>
+                </pre>
+                <hr class="trans--grow hr1" size="4" width="100%" color="black">
+                <h2>Explanation</h2>
+                <hr class="trans--grow hr2" size="4" width="100%" color="red">
+                <div class="par">
+                <p>
+                    The helper trainer function helps you to train your neural network module , has various parameters that can be modified for more control.
+                    It also works for fully connected layers.
+                </p>
+                <br>
+                <h4 style="padding-bottom: 10px;">Parameters:</h4>
+                <ul class="parameters">
+                    <li><span class="param">net</span><span class="datatype">(Object)</span> - The neural net object that you have constructed.</li>
+                    <li><span class="param">x</span><span class="datatype">(Numpy arr)</span> - Your training data. You can define the name here it's x</li>
+                    <li><span class="param">y</span><span class="datatype">(Numpy arr)</span> - Your training target data. You can define the name here it's y</li>
+                    <li><span class="param">(x_val,y_val)</span><span class="datatype">(tuple)</span> - Tuple consisting of validation data along with targets each of them are expected to be <i>numpy arrays</i>.</li>
+                    <li><span class="param">update_rule</span><span class="datatype">(String)</span> - This denotes the kind of parameter update that you need. You can choose from a range of various update rules ('sgd','sgd_momentum','rmsprop','adam').</li>
+                    <li><span class="param">lr_decay</span><span class="datatype">(float)</span> - Amount learning rate decay for each parameter update.</li>
+                    <li><span class="param">optim_config</span><span class="datatype">(dictionary)</span> - The dictionary containing the hyperparamters for update rules and also contains the learning rate.</li>
+                    <li><span class="param">batch_size</span><span class="datatype">(Int)</span> - The batch size for your inputs.</li>
+                    <li><span class="param">verbose</span><span class="datatype">(bool)</span> - When set to false no output will be printed.</li>
+                </ul>
+                </div>
+        </div>
+    </div>
+    <script>
+        //scroll animation
+        var direction_i = 0,
+        $window = $(window);
+
+        $(document).scroll(function() {
+        hr_scroll();
+        });
+
+        hr_scroll();
+
+        function hr_scroll() {
+        var scroll_top = $window.scrollTop(),
+            direction = (scroll_top > direction_i) ? 'up' : 'down',
+            direction_i = scroll_top;
+
+        $('hr').each(function() {
+            var $this = $(this),
+                from_top = $this.offset().top - scroll_top - 100,
+                is_activated = $this.hasClass('activated');
+            
+            if (from_top < 300 && from_top > 0) {
+            if (is_activated) {
+                $this.removeClass('activated');
+            }
+            $this.css('width', (100 - (from_top/300) * 100) + '%');
+            }
+
+            if (from_top <= 0 && !is_activated) {
+            if (direction === 'down') {
+                $this.addClass('activated');
+            }
+            }
+            
+        });
+        }
+        jQuery(document).ready(function($){
+            setTimeout(function(){
+                $('.trans--grow').addClass('grow');
+            }, 275);
+        });
+        //sticky nav
+        window.onscroll = function() {myFunction()};
+        var navbar = document.getElementsByClassName("inner-navbar")[0];
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+        } else {
+            navbar.classList.remove("sticky");
+        }
+        }
+        //on button press go to div
+        $("#Trainer").click(function() {
+            var variable = $("#Trainer").html();
+            variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        $("#input").click(function() {
+            var variable = $("#input").html();
+            variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        $("#Conv").click(function() {
+            var variable = $("#Conv").html();
+            variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        $("#Pool").click(function() {
+            var variable = $("#Pool").html();
+            variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        $("#Loss").click(function() {
+            var variable = $("#Loss").html();
+            variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        //code highlight
+        hljs.highlightAll();
+    </script> 
+</body>
+{% endblock %}

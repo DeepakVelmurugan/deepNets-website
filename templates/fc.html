@@ -1,0 +1,503 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/vs.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        .inner-navbar ul {
+        align-items: center;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: rgb(10, 140, 247);        
+        }
+        .buttontype{
+            background: transparent;
+            border: 1px solid rgb(10, 140, 247);
+            font-size: 15px;
+            color: whitesmoke;
+            position: relative;
+            outline: none;
+        }
+        .inner-navbar li {
+            float: left;
+            padding: 10px 115px;
+            display: block;
+            color: whitesmoke;
+            position: relative;
+            text-decoration: none;
+            transition: 0.5s;
+        }
+
+        .inner-navbar li::after{
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 4px;
+            top: 0%;
+            left: 0;
+            background:greenyellow;
+            transition: transform 0.5s;
+            transform: scaleX(0);
+            transform-origin: right;
+        }
+
+        .inner-navbar li:hover {
+            color:black;            
+        }
+
+        .inner-navbar li:hover::after{
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        .Input{
+            width:100%;
+            height: 400px;
+            padding: 10px;
+            align-items: center;
+            background-color: white;
+        }
+        .Input h1{
+            text-align: center;
+            font-size: 30px;
+            color:black;
+        }
+        .ReLU{
+            width:100%;
+            height: 600px;
+            padding: 10px;
+            align-items: center;
+            background-color: black;
+            color: white;
+        }
+        .ReLU h1{
+            text-align: center;
+            font-size: 30px;
+            color:white;
+        }
+        .Batch{
+            width:100%;
+            height: 400px;
+            padding: 10px;
+            align-items: center;
+            background-color: whitesmoke;
+        }
+        .Batch h1{
+            text-align: center;
+            font-size: 30px;
+            color:black;
+        }
+        .Layer{
+            width:100%;
+            height: 430px;
+            padding: 10px;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.822);
+            color: white;
+        }
+        .Layer h1{
+            text-align: center;
+            font-size: 30px;
+            color:white;
+        }
+        .Loss{
+            width:100%;
+            height: 500px;
+            padding: 10px;
+            align-items: center;
+            background-color: rgb(179, 39, 39);
+            color: white;
+        }
+        .Loss h1{
+            text-align: center;
+            font-size: 30px;
+            color:black;
+        }
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+        .sticky + .content{
+            padding-top: 65px;
+        }
+        hr {
+        width: 0%;
+        min-width: 20%;
+        max-width: 100%;
+        margin: 0 auto;
+        border: none;
+        position: relative;
+        transition: box-shadow 200ms ease-in-out;
+        box-shadow: 0px 0px 0px 0px #f9f9f9;
+        }
+
+        hr.activated {
+        opacity: 1;
+        }
+
+        .trans--grow{
+        -webkit-transition: width 1s ease-out; /* For Safari 3.1 to 6.0 */
+        transition: width 1s  ease-out;
+        width : 0%;
+        }
+        .grow{
+        width:100%;
+        }
+        .hr1{
+        margin-left:0;
+        }
+        .hr2{
+        margin-right:0;
+        }
+        h2{
+            text-align: center;
+        }
+        .Input .par{
+            padding-top: 10px;
+            display: inline-block;
+            font-size: 18px;          
+        }
+        .Input .parameters li::before{
+            content: "►";
+        }
+        .Input .parameters .datatype{
+            color:red;
+        }
+        .Input .parameters .param{
+            font-weight: bold;
+        }
+        .ReLU .par{
+            padding-top: 10px;
+            display: inline-block;
+            font-size: 18px;
+        }
+        .ReLU .par .container-image{
+            width: 30%;
+            
+        }
+        .ReLU .par .image-container {
+        margin: 10px;
+        width: 50%;
+        overflow: hidden;
+        } 
+        .ReLU .par pre{
+            color:greenyellow;
+        }
+        .ReLU .par a{
+            color:rgb(10, 140, 247);
+            text-decoration: none;
+        }
+        .ReLU .parameters li::before{
+            content: "►";
+        }
+        .ReLU .parameters .datatype{
+            color:red;
+        }
+        .ReLU .parameters .param{
+            font-weight: bold;
+        }
+        .Batch .par{
+            padding-top: 10px;
+            display: inline-block;
+            font-size: 18px;
+        }
+        .Batch .par a{
+            color:rgb(10, 140, 247);
+            text-decoration: none;
+        }
+        .Batch .parameters li::before{
+            content: "►";
+        }
+        .Batch .parameters .datatype{
+            color:red;
+        }
+        .Batch .parameters .param{
+            font-weight: bold;
+        }
+        .Layer .par{
+            padding-top: 10px;
+            display: inline-block;
+            font-size: 18px;
+        }
+        .Layer .par a{
+            color:rgb(10, 140, 247);
+            text-decoration: none;
+        }
+        .Layer .parameters li::before{
+            content: "►";
+        }
+        .Layer .parameters .datatype{
+            color:red;
+        }
+        .Layer .parameters .param{
+            font-weight: bold;
+        }  
+        .Loss .par{
+            padding-top: 10px;
+            display: inline-block;
+            font-size: 18px;
+        }
+        .Loss .par a{
+            color:rgb(10, 140, 247);
+            text-decoration: none;
+        }
+        .Loss .parameters li::before{
+            content: "►";
+        }
+        .Loss .parameters .datatype{
+            color:greenyellow;
+        }
+        .Loss .parameters .param{
+            font-weight: bold;
+        } 
+        @media screen and (max-width: 1024px){
+            .Input,.ReLU,.Loss,.Batch,.Layer{
+                height: 700px;
+            }
+        }
+
+    </style> 
+</head>
+<body>
+    <div class="inner-navbar">
+        <ul>
+            <li><button class="buttontype" id="input" type="button">Input</button></li>
+            <li><button class="buttontype" id="ReLU" type="button">ReLU</button></li>
+            <li><button class="buttontype" id="Batch" type="button">Batch Norm</button></li>
+            <li><button class="buttontype" id="Layer" type="button">Layer Norm</button></li>
+            <li><button class="buttontype" id="Loss" type="button">Loss</button></li>
+          </ul>
+    </div>
+    <div class="content">
+        <div class="Input" id="input">
+            <h1>Input layer</h1>   
+                <pre>
+                <code class="python">
+                    #Code:
+                    layers = [] #Empty list to insert our layers
+                    layers.append({"layer_type":"input","inp":x}) # note layer_type -> input
+                </code>
+                </pre>
+                <hr class="trans--grow hr1" size="4" width="100%" color="black">
+                <h2>Explanation</h2>
+                <hr class="trans--grow hr2" size="4" width="100%" color="red">
+                <div class="par">
+                <p>
+                    The input layer defines the user input for fully connected layer, it requires input of size NxD where N is the number of inputs and D is the dimensions. 
+                    For example if D = 32x32x3 (width x height x number of color channels) then D becomes 3072 on forward prop. D can be of any dimensions, deepNets takes care of it.
+                </p>
+                <br>
+                <h4 style="padding-bottom: 10px;">Parameters:</h4>
+                <ul class="parameters">
+                    <li><span class="param">layer_type</span><span class="datatype">(String)</span> - input keyword is required since it's the input layer. Make sure the first layer is always the input layer.</li>
+                    <li><span class="param">inp</span><span class="datatype">(Numpy arr)</span> - This is your input that your feeding in the shape of NxD. Make sure it's a numpy array.</li>
+                </ul>
+                </div>
+        </div>
+        <div class="ReLU" id="relu">
+            <h1>ReLU layer</h1>
+                <pre>
+                <code class="python">
+                    #Code:
+                    layers = [] #Empty list to insert our layers
+                    layers.append({"layer_type":"input","inp":x}) # note layer_type -> input
+                    layers.append({"layer_type":"relu","hidden_layers":100}) # note layer_type -> relu
+                </code>
+                </pre>
+                <hr class="trans--grow hr1" size="4" width="100%" color="white"><h2>Explanation</h2><hr class="trans--grow hr2" size="4" width="100%" color="red">
+                <div class="par">
+                 <p>
+                    ReLU - the recitified linear unit is the most commonly used activation function. It determines whether a particular neuron fires or not. 
+                    Though there are many types of activation functions this one tends to greatly accelerate the convergence of stochastic gradient descent.
+                    Learn more from <a href="http://www.cs.toronto.edu/~fritz/absps/imagenet.pdf">this</a> paper.
+                    <br>
+                    <p style="color: greenyellow;">ReLU graph shown below denotes zero when x<0 and linear when x>0</p>
+                    <div class="image-container">
+                        <img src="https://i.postimg.cc/kXGSsMH4/Screen-Shot-2021-05-05-at-8-29-38-PM.png" alt="ReLU" class="container-image"/>
+                    </div>
+                    <h4 style="padding-bottom: 10px;">Parameters:</h4>
+                    <ul class="parameters">
+                        <li><span class="param">layer_type</span><span class="datatype">(String)</span> - relu keyword is required since it's the relu layer. Make sure that it is case sensitive.</li>
+                        <li><span class="param">hidden_layers</span><span class="datatype">(Int)</span> - Specify the hidden units/neurons that you need for that particular layer.</li>
+                    </ul> 
+                </p>
+               </div>
+        </div>
+        <div class="Batch" id="batch">
+            <h1>Batch Normalization</h1>
+                <pre>
+                <code class="python">
+                    #Code:
+                    layers = [] #Empty list to insert our layers
+                    layers.append({"layer_type":"input","inp":x}) # note layer_type -> input
+                    layers.append({"layer_type":"relu","hidden_layers":100}) # note layer_type -> relu
+                    layers.append({"layer_type":"batchnorm"}) # note layer_type -> batchnorm
+                </code>
+                </pre>
+                <hr class="trans--grow hr1" size="4" width="100%" color="red"><h2>Explanation</h2><hr class="trans--grow hr2" size="4" width="100%" color="black">
+                <div class="par">
+                <p>
+                    Batch Normalization relieves us from the headaches caused by weight initialization and forces the activation functions to take 
+                    a unit gaussian distribution during the beginning of the training. In deepNets specify this layer after the non-linearities(relu)
+                    because deepNets is programmed to position <i>normalization</i> layer as per best practices.<br>
+                    It makes our neural network more robust to bad initialization. Learn more about <a href="https://arxiv.org/abs/1502.03167">batch normalization</a>.
+                    <h4 style="padding-bottom: 10px; padding-top: 10px;">Parameters:</h4>
+                    <ul class="parameters">
+                        <li><span class="param">layer_type</span><span class="datatype">(String)</span> - batchnorm keyword is required since it's the batchnorm layer. Make sure that it is case sensitive.</li>
+                    </ul> 
+                </p>
+                </div>
+        </div>
+        <div class="Layer" id="layer">
+            <h1>Layer Normalization</h1>
+                <pre>
+                <code class="python">
+                    #Code:
+                    layers = [] #Empty list to insert our layers
+                    layers.append({"layer_type":"input","inp":x}) # note layer_type -> input
+                    layers.append({"layer_type":"relu","hidden_layers":100}) # note layer_type -> relu
+                    layers.append({"layer_type":"layernorm"}) # note layer_type -> layernorm
+                </code>
+                </pre>
+                <hr class="trans--grow hr1" size="4" width="100%" color="white"><h2>Explanation</h2><hr class="trans--grow hr2" size="4" width="100%" color="red">
+                <div class="par">
+                    <p>
+                        Though Batch Normalization has proven that it makes networks easier to train, but the drawback is that it depends on 
+                        <a href="https://stats.stackexchange.com/questions/153531/what-is-batch-size-in-neural-network">batch size</a>
+                        which makes complex networks difficult to train due to hardware limitations. One of the ways to mitigate this problem is to normalize on features than on batch.
+                        This is the concept of Layer Normalization where each feature vector is normalized based on the sum of other feature vectors. Follow the same method as per batchnorm when constructing your neural net.
+                        <br>
+                        Learn more about <a href="https://arxiv.org/pdf/1607.06450.pdf">layer normalization</a>.
+                        <h4 style="padding-bottom: 10px; padding-top: 10px;">Parameters:</h4>
+                        <ul class="parameters">
+                            <li><span class="param">layer_type</span><span class="datatype">(String)</span> - layernorm keyword is required since it's the layernorm layer. Make sure that it is case sensitive.</li>
+                        </ul> 
+                    </p>
+                </div>
+        </div>
+        <div class="Loss" id="loss">
+            <h1>Loss layer</h1>
+                <pre>
+                <code class="python">
+                    #Code:
+                    layers = [] #Empty list to insert our layers
+                    layers.append({"layer_type":"input","inp":x}) # note layer_type -> input
+                    layers.append({"layer_type":"relu","hidden_layers":100}) # note layer_type -> relu
+                    layers.append({"layer_type":"loss","num_classes":10}) # note layer_type -> loss
+                </code>
+                </pre>
+                <hr class="trans--grow hr1" size="3" width="100%" color="white"><h2>Explanation</h2><hr class="trans--grow hr2" size="3" width="100%" color="white">
+                <div class="par">
+                    <p>
+                        The last layer is always the loss layer. This layer by default uses the softmax classifier to calculate the loss which gives the normalized class probablities. 
+                        It is mostly preferred in binary classification. The number of classes denotes the different classes that you need to predict.<br>
+                        Refer this formula for softmax/cross-entropy loss:
+                        <img src="https://i.postimg.cc/Y9nxwTX1/Screen-Shot-2021-05-06-at-8-20-40-AM.png" alt="softmax" width="10%"/>
+                        <h4 style="padding-bottom: 10px; padding-top: 10px;">Parameters:</h4>
+                        <ul class="parameters">
+                            <li><span class="param">layer_type</span><span class="datatype">(String)</span> - loss keyword is required denoting the loss layer. Make sure that the last layer is always the loss layer.</li>
+                            <li><span class="param">num_classes</span><span class="datatype">(Int)</span> - denotes the number of classes you need for prediction.</li>
+                        </ul> 
+                    </p>
+                </div>
+        </div>
+    </div>
+    <script>
+        var direction_i = 0,
+        $window = $(window);
+
+        $(document).scroll(function() {
+        hr_scroll();
+        });
+
+        hr_scroll();
+
+        function hr_scroll() {
+        var scroll_top = $window.scrollTop(),
+            direction = (scroll_top > direction_i) ? 'up' : 'down',
+            direction_i = scroll_top;
+
+        $('hr').each(function() {
+            var $this = $(this),
+                from_top = $this.offset().top - scroll_top - 100,
+                is_activated = $this.hasClass('activated');
+            
+            if (from_top < 300 && from_top > 0) {
+            if (is_activated) {
+                $this.removeClass('activated');
+            }
+            $this.css('width', (100 - (from_top/300) * 100) + '%');
+            }
+
+            if (from_top <= 0 && !is_activated) {
+            if (direction === 'down') {
+                $this.addClass('activated');
+            }
+            }
+            
+        });
+        }
+        jQuery(document).ready(function($){
+            setTimeout(function(){
+                $('.trans--grow').addClass('grow');
+            }, 275);
+        });
+        window.onscroll = function() {myFunction()};
+        var navbar = document.getElementsByClassName("inner-navbar")[0];
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+        } else {
+            navbar.classList.remove("sticky");
+        }
+        }
+        $("#Batch").click(function() {
+            var variable = $("#Batch").html();
+            variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        $("#input").click(function() {
+            var variable = $("#input").html();
+            variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        $("#Layer").click(function() {
+            var variable = $("#Layer").html();
+            variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        $("#ReLU").click(function() {
+            var variable = $("#ReLU").html();
+            variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        $("#Loss").click(function() {
+            var variable = $("#Loss").html();
+            variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        hljs.highlightAll();
+    </script> 
+</body>
+{% endblock %}

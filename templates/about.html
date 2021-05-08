@@ -1,0 +1,962 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        .inner-navbar ul {
+        align-items: center;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: black;
+        }
+        .buttontype{
+            background: transparent;
+            border: 1px solid black;
+            font-size: 15px;
+            color: rgb(179, 39, 39);
+            position: relative;
+            outline: none;
+        }
+        .inner-navbar li {
+            float: left;
+            padding: 10px 150px;
+            display: block;
+            color: rgb(179, 39, 39);
+            position: relative;
+            text-decoration: none;
+            transition: 0.5s;
+        }
+
+        .inner-navbar li::after{
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 4px;
+            top: 0%;
+            left: 0;
+            background:rgb(179, 39, 39);
+            transition: transform 0.5s;
+            transform: scaleX(0);
+            transform-origin: right;
+        }
+
+        .inner-navbar li:hover {
+            color:black;            
+        }
+
+        .inner-navbar li:hover::after{
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+        .sticky + .content{
+            padding-top: 65px;
+        }
+        :root {
+        --secondary-color: black;
+        --contrast-color: rgb(179, 39, 39);
+        }
+        .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        z-index: -10;
+        background-color: var(--contrast-color);
+        }
+
+        .Intro {
+        display: flex;
+        height: 100vh;
+        justify-content: space-around;
+        align-items: center;
+        color: black;
+        animation: expand .8s ease forwards;
+        background-color: var(--secondary-color);
+        position: relative;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        transition: all .8s ease;
+        }
+
+        .container_content {
+        width: 50%;
+        }
+
+        .container_content_inner {
+        width: 80%;
+        margin-left: 80px;
+        }
+
+        .container_outer_img {
+        margin: 50px;
+        width: 50%;
+        overflow: hidden;
+        }   
+            
+        .container_img {
+        width: 90%;
+        animation: slideIn 1.5s ease-in-out forwards;
+        }
+
+        .par {
+        height: auto;
+        overflow: hidden;
+        display: inline-block;
+        }
+
+        .par p{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        line-height: 28px;
+        color: white;
+        transform: translateY(300px);
+        animation: slideUp .8s ease-in-out forwards .8s;
+        }
+
+        .btns {
+        height: 100%;
+        position: relative;
+        width: 150px;
+        overflow: hidden;
+        }
+
+        .btns_more {
+        background: transparent;
+        border: 1px solid var(--contrast-color);
+        border-radius: 50px;
+        padding: 8px 12px;
+        color: rgb(179, 39, 39);
+        font-size: 16px;
+        text-transform: uppercase;
+        position: relative;
+        margin-top: 15px;
+        outline: none;
+        transform: translateY(50px);
+        animation: slideUp .8s ease-in-out  forwards 1s;
+        }
+
+        .title {
+        overflow: hidden;
+        height: auto;
+        }
+
+        @keyframes slideIn {
+        0% {
+            transform: translateX(500px) scale(.2);
+        }
+        100% {
+            transform: translateX(0px) scale(1);
+        }
+        }
+
+        @keyframes slideUp {
+        0% {
+            transform: translateY(300px);
+        }
+        100% {
+            transform: translateY(0px);
+        }
+        }
+
+        @keyframes expand {
+        0% {
+            transform: translateX(1400px);
+        }
+        100% {
+            transform: translateX(0px);
+        }
+        }
+        .Work{
+            width:100%;
+            height: 710px;
+            padding: 10px;
+            align-items: center;
+            background-color: white;
+            color: black;
+        }
+        .Projects{
+            width:100%;
+            height: 600px;
+            padding: 10px;
+            align-items: center;
+            background-color: black;
+            color: white;
+        }
+        .Contact{
+            width:100%;
+            height: 500px;
+            padding: 10px;
+            align-items: center;
+            background-color: white;
+            color: black;
+        }
+        /* changing text */
+        @-webkit-keyframes hello {
+        0% {
+            transform: translateY(0);
+        }
+        26.6666666667% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        33.3333333333% {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        33.3343333333% {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        33.3363333333% {
+            transform: translateY(100%);
+            opacity: 1;
+        }
+        93.3333333333% {
+            transform: translateY(100%);
+        }
+        100% {
+            transform: translateY(0);
+        }
+        }
+        @keyframes hello {
+        0% {
+            transform: translateY(0);
+        }
+        26.6666666667% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        33.3333333333% {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        33.3343333333% {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        33.3363333333% {
+            transform: translateY(100%);
+            opacity: 1;
+        }
+        93.3333333333% {
+            transform: translateY(100%);
+        }
+        100% {
+            transform: translateY(0);
+        }
+        }
+        @-webkit-keyframes hola {
+        0% {
+            transform: translateY(0);
+        }
+        26.6666666667% {
+            transform: translateY(0);
+        }
+        33.3333333333% {
+            transform: translateY(-100%);
+        }
+        60% {
+            transform: translateY(-100%);
+            opacity: 1;
+        }
+        66.6666666667% {
+            transform: translateY(-200%);
+            opacity: 0;
+        }
+        66.6676666667% {
+            transform: translateY(0);
+        }
+        66.6696666667% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(0);
+        }
+        }
+        @keyframes hola {
+        0% {
+            transform: translateY(0);
+        }
+        26.6666666667% {
+            transform: translateY(0);
+        }
+        33.3333333333% {
+            transform: translateY(-100%);
+        }
+        60% {
+            transform: translateY(-100%);
+            opacity: 1;
+        }
+        66.6666666667% {
+            transform: translateY(-200%);
+            opacity: 0;
+        }
+        66.6676666667% {
+            transform: translateY(0);
+        }
+        66.6696666667% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(0);
+        }
+        }
+        @-webkit-keyframes vanakkam {
+        0% {
+            transform: translateY(-300%);
+        }
+        0.0001% {
+            transform: translateY(0);
+        }
+        26.6666666667% {
+            transform: translateY(0);
+        }
+        33.3333333333% {
+            transform: translateY(-100%);
+        }
+        60% {
+            transform: translateY(-100%);
+        }
+        66.6666666667% {
+            transform: translateY(-200%);
+        }
+        93.3333333333% {
+            transform: translateY(-200%);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-300%);
+            opacity: 0;
+        }
+        }
+        @keyframes vanakkam {
+        0% {
+            transform: translateY(-300%);
+        }
+        0.0001% {
+            transform: translateY(0);
+        }
+        26.6666666667% {
+            transform: translateY(0);
+        }
+        33.3333333333% {
+            transform: translateY(-100%);
+        }
+        60% {
+            transform: translateY(-100%);
+        }
+        66.6666666667% {
+            transform: translateY(-200%);
+        }
+        93.3333333333% {
+            transform: translateY(-200%);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-300%);
+            opacity: 0;
+        }
+        }
+        .container-change {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        }
+
+        .word {
+        display: flex;
+        grid-column: 2;
+        grid-row: auto;
+        }
+        .word span {
+        display: inline-block;
+        }
+
+        .hello span:nth-child(1) {
+        -webkit-animation: hello 6s ease-in-out both 0.05s infinite;
+                animation: hello 6s ease-in-out both 0.05s infinite;
+        }
+
+        .hola span:nth-child(1) {
+        -webkit-animation: hola 6s ease-in-out both 0.05s infinite;
+                animation: hola 6s ease-in-out both 0.05s infinite;
+        }
+
+        .vanakkam span:nth-child(1) {
+        -webkit-animation: vanakkam 6s ease-in-out both 0.05s infinite;
+                animation: vanakkam 6s ease-in-out both 0.05s infinite;
+        }
+
+        .hello span:nth-child(2) {
+        -webkit-animation: hello 6s ease-in-out both 0.1s infinite;
+                animation: hello 6s ease-in-out both 0.1s infinite;
+        }
+
+        .hola span:nth-child(2) {
+        -webkit-animation: hola 6s ease-in-out both 0.1s infinite;
+                animation: hola 6s ease-in-out both 0.1s infinite;
+        }
+
+        .vanakkam span:nth-child(2) {
+        -webkit-animation: vanakkam 6s ease-in-out both 0.1s infinite;
+                animation: vanakkam 6s ease-in-out both 0.1s infinite;
+        }
+
+        .hello span:nth-child(3) {
+        -webkit-animation: hello 6s ease-in-out both 0.15s infinite;
+                animation: hello 6s ease-in-out both 0.15s infinite;
+        }
+
+        .hola span:nth-child(3) {
+        -webkit-animation: hola 6s ease-in-out both 0.15s infinite;
+                animation: hola 6s ease-in-out both 0.15s infinite;
+        }
+
+        .vanakkam span:nth-child(3) {
+        -webkit-animation: vanakkam 6s ease-in-out both 0.15s infinite;
+                animation: vanakkam 6s ease-in-out both 0.15s infinite;
+        }
+
+        .hello span:nth-child(4) {
+        -webkit-animation: hello 6s ease-in-out both 0.2s infinite;
+                animation: hello 6s ease-in-out both 0.2s infinite;
+        }
+
+        .hola span:nth-child(4) {
+        -webkit-animation: hola 6s ease-in-out both 0.2s infinite;
+                animation: hola 6s ease-in-out both 0.2s infinite;
+        }
+
+        .vanakkam span:nth-child(4) {
+        -webkit-animation: vanakkam 6s ease-in-out both 0.2s infinite;
+                animation: vanakkam 6s ease-in-out both 0.2s infinite;
+        }
+
+        .hello span:nth-child(5) {
+        -webkit-animation: hello 6s ease-in-out both 0.25s infinite;
+                animation: hello 6s ease-in-out both 0.25s infinite;
+        }
+
+        .hola span:nth-child(5) {
+        -webkit-animation: hola 6s ease-in-out both 0.25s infinite;
+                animation: hola 6s ease-in-out both 0.25s infinite;
+        }
+
+        .vanakkam span:nth-child(5) {
+        -webkit-animation: vanakkam 6s ease-in-out both 0.25s infinite;
+                animation: vanakkam 6s ease-in-out both 0.25s infinite;
+        }
+
+        .hello span:nth-child(6) {
+        -webkit-animation: hello 6s ease-in-out both 0.3s infinite;
+                animation: hello 6s ease-in-out both 0.3s infinite;
+        }
+
+        .hola span:nth-child(6) {
+        -webkit-animation: hola 6s ease-in-out both 0.3s infinite;
+                animation: hola 6s ease-in-out both 0.3s infinite;
+        }
+
+        .vanakkam span:nth-child(6) {
+        -webkit-animation: vanakkam 6s ease-in-out both 0.3s infinite;
+                animation: vanakkam 6s ease-in-out both 0.3s infinite;
+        }
+
+        .hello span:nth-child(7) {
+        -webkit-animation: hello 6s ease-in-out both 0.35s infinite;
+                animation: hello 6s ease-in-out both 0.35s infinite;
+        }
+
+        .hola span:nth-child(7) {
+        -webkit-animation: hola 6s ease-in-out both 0.35s infinite;
+                animation: hola 6s ease-in-out both 0.35s infinite;
+        }
+
+        .vanakkam span:nth-child(7) {
+        -webkit-animation: vanakkam 6s ease-in-out both 0.35s infinite;
+                animation: vanakkam 6s ease-in-out both 0.35s infinite;
+        }
+
+        .hello span:nth-child(8) {
+        -webkit-animation: hello 6s ease-in-out both 0.4s infinite;
+                animation: hello 6s ease-in-out both 0.4s infinite;
+        }
+
+        .hola span:nth-child(8) {
+        -webkit-animation: hola 6s ease-in-out both 0.4s infinite;
+                animation: hola 6s ease-in-out both 0.4s infinite;
+        }
+
+        .vanakkam span:nth-child(8) {
+        -webkit-animation: vanakkam 6s ease-in-out both 0.4s infinite;
+                animation: vanakkam 6s ease-in-out both 0.4s infinite;
+        }
+
+        .title-change {
+            display: grid;
+            grid-template-columns: repeat(2, -webkit-max-content);
+            grid-template-columns: repeat(2, max-content);
+            grid-template-rows: auto;
+            overflow: hidden;
+            max-height: 6vw;
+            transform: translateY(100px);
+            animation: slideUp .8s ease forwards .5s;
+        }
+
+        .title-change {
+            color: rgb(179, 39, 39);
+            font-weight: bold;
+            font-size: 6vw;
+            line-height: 6vw;
+            letter-spacing: 3px;
+        }  
+        h2{
+          text-align: center;
+        }
+        .Work p{
+            padding-top: 10px;
+        }
+        .Work .work-img{
+            float: left;
+            padding-right: 10px;
+            width: 10%;
+        }
+        .Work .LTI-pos{
+            color:rgb(61, 0, 202)
+        }
+        .Work li{
+            list-style-type: none;
+            font-size: 15px;
+        }
+        .Work li::before{
+            content:"•";
+            color: black;
+            padding-right: 10px;
+        }
+        .Work .canvas{
+            width:500px; 
+            height: 300px; 
+            border: 2px solid rgb(61, 0, 202);
+        }
+        .Work .LTI-first{
+            display:inline-block;
+            padding-left: 154px;
+        }
+        .Work .verticalLine{
+            display: inline-block;
+            border-left:dotted rgb(61, 0, 202);
+            height: 120px;
+        }
+        .Projects p{
+            padding-top: 10px;
+        }
+        .Projects .column{
+            float: left;
+            width: 31.33%;
+            padding: 10px;
+            height: 500px;
+            text-align: center;
+ 
+        }
+        .Projects a{
+            align-items: center;
+            text-decoration: none;
+            font-size: 20px;
+            color:red;
+        }
+        .Projects a:hover{
+            color:white;
+        }
+        .Projects .project-embed{
+            width:380px; 
+            height: 380px;
+        }
+        /* Slideshow container */
+        .slideshow-container {
+        position: relative;
+        background: white;
+        }
+
+        /* Slides */
+        .mySlides {
+        display: none;
+        padding: 80px;
+        text-align: center;
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        margin-top: -30px;
+        padding: 16px;
+        color: black;
+        font-weight: bold;
+        font-size: 20px;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+        position: absolute;
+        right: 0;
+        border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .next:hover {
+        background-color: rgba(0,0,0,0.8);
+        color: red;
+        }
+
+        /* The dot/bullet/indicator container */
+        .dot-container {
+            text-align: center;
+            padding: 20px;
+            background: white;
+        }
+
+        /* The dots/bullets/indicators */
+        .dot {
+        cursor: pointer;
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: black;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+        }
+
+        /* Add a background color to the active dot/circle */
+        .active, .dot:hover {
+        background-color: rgb(179, 39, 39);
+        }
+
+        /* Add an italic font style to all quotes */
+        q {font-style: italic;}
+
+        /* Add a blue color to the author */
+        .author {color: cornflowerblue;}
+
+        .fa {
+        padding: 20px;
+        font-size: 20px;
+        width: 20px;
+        text-align: center;
+        text-decoration: none;
+        margin: 5px 2px;
+        border-radius: 50%;
+        }
+        .fa-google {
+        background: #dd4b39;
+        color: white;
+        }
+
+        .fa-linkedin {
+        background: #007bb5;
+        color: white;
+        }
+
+        .Contact .social-icons{
+            text-align: center;
+        }
+        .Contact .resume{
+            text-align: center;
+            
+        }
+        .Contact .resume a{
+            background: transparent;
+            border: 1px solid var(--contrast-color);
+            border-radius: 50px;
+            padding: 8px 12px;
+            color: rgb(179, 39, 39);
+            font-size: 16px;
+            text-transform: uppercase;
+            position: relative;
+            margin-top: 15px;
+            outline: none;
+            text-decoration: none;
+        }
+        .Contact .resume a:hover{
+            background: black;
+            color: white;
+            border: 1px solid black;
+        }
+        @media screen and (max-width: 1024px){
+            .Work{
+                height:900px;
+            }
+            .Projects{
+                height:1700px;
+            }
+            .Projects .column{
+                width: 50%;
+            }
+            .Projects .project-embed{
+                width:200px; 
+                height: 200px;
+            }
+            .Contact{
+                height: 700px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="inner-navbar">
+        <ul>
+            <li><button class="buttontype" id="Intro" type="button">Intro</button></li>
+            <li><button class="buttontype" id="Work" type="button">Work</button></li>
+            <li><button class="buttontype" id="Projects" type="button">Projects</button></li>
+            <li><button class="buttontype" id="Contact" type="button">Contact</button></li>
+          </ul>
+    </div>
+    <div class= 'Intro' id="intro">
+        <div class="container_content">
+        <div class="container_content_inner">
+        <div class="title">
+            <div class="title-change">
+                <div class="word hello">
+                  <span>H</span>
+                  <span>e</span>
+                  <span>l</span>
+                  <span>l</span>
+                  <span>o</span>
+                </div>
+                <div class="word hola">
+                  <span>H</span>
+                  <span>o</span>
+                  <span>l</span>
+                  <span>a</span>
+                </div>
+                <div class="word vanakkam">
+                  <span>V</span>
+                  <span>a</span>
+                  <span>n</span>
+                  <span>a</span>
+                  <span>k</span>
+                  <span>k</span>
+                  <span>a</span>
+                  <span>m</span>
+                </div>
+              </div>
+        </div>
+        <div class="par">
+        <p>
+            I'm Deepak Velu! , I love building stuff whatever it might be. Coding feels like an art to me and would love to learn anything new.
+            I always believe in asking the right questions, the more you ask the more you'll understand.
+        </p>
+        </div>
+        <div class="btns">
+        <button class='btns_more' id="btns_more" type="button"> See more</button>
+        </div>
+        </div>
+        </div>
+         <div class="container_outer_img">
+         <div class="img-inner">
+         <img src='https://i.postimg.cc/J0Vc8dv0/IMG-20180402-223307.jpg'  alt="deepak-pic" class="container_img"/>
+               </div>
+             </div>
+    </div>
+    <div class="overlay"></div>
+    <div class="Work" id="work">
+        <h2>Work experience</h2>
+        <p>
+            <img src='https://i.postimg.cc/DZXp1NXd/Screen-Shot-2021-05-07-at-3-25-08-PM.png' alt="LTI" class="work-img"/><h3>LTI - Larsen & Toubro Infotech</h3><h3><span class="LTI-pos">Software</span> Engineer</h3>2020-2021
+            <ul>
+                <li>Worked as a part of LTI Canvas Resilience and built functions for causing
+                    numerous attacks to host servers and finding it’s resilience, which is one the
+                    core features of the project.</li>
+                <li>Extracted numerous logs from servers and structured the same, easing 50% of
+                    work required for analytics.</li>
+                <li>Reduced 75% of workload for front end engineers by developing a easy and a
+                    powerful back end using python flask.</li>
+            </ul>
+            <br>
+            <embed src="https://canvas.lntinfotech.com/lti-canvas-resilience.html" class="canvas"><br>
+            <span class="LTI-first">
+                <span class="verticalLine"></span>
+                <br>
+                <h3><span class="LTI-pos">Graduate Engineer</span> Trainee</h3>2019-2020
+                <ul>
+                    <li>Worked as part of a fortune 500 company and increased website availability to
+                        more regions by 10% and made enhancements accounting to 20% increase in
+                        website capability.</li>
+                    <li>Core developer of admin website reducing work load of customers by 30%.</li>
+                    <li>Efficient debugging and automating parts of the website.</li>
+                </ul>
+            </span>
+            
+        </p>
+    </div>
+    <div class="Projects" id="projects">
+        <h2>Projects</h2>
+        <br>
+        <div class="column" style="border: 2px solid rgb(179, 39, 39)">
+            <h3>deepNets</h3>
+            <br>
+            <embed src="http://127.0.0.1:5000/conv" class="project-embed">
+            <br>
+            <br>
+            <a href="https://github.com/DeepakVelmurugan/deepNets">View code</a>
+        </div>
+        <div class="column" style="border: 2px solid rgb(179, 39, 39)">
+            <h3>Virtual data scientist</h3>
+            <br>
+            <embed src="https://virtual-data-scientist.herokuapp.com" class="project-embed">
+                <br>
+                <br>
+            <a href="https://github.com/DeepakVelmurugan/Virtual-Data-Scientist">View Code</a>
+        </div>
+        <div class="column" style="border: 2px solid rgb(179, 39, 39)">
+            <h3>Facial expression recognition</h3>
+            <br>
+            <iframe class="project-embed" src="https://user-images.githubusercontent.com/55920093/110316776-3243f780-8031-11eb-8bfb-24556efed78c.mp4" frameborder="0" allowfullscreen></iframe>
+            <br>
+                <br>
+            <a href="https://github.com/DeepakVelmurugan/Facial-Expression-Recognition">View Code</a>
+        </div>
+    </div>
+    <div class="Contact" id="contact">
+        <h2>Contact</h2>
+        <br>
+        <h3 style="text-align: center;"><i>What my colleagues say about me</i></h3>
+        <br>
+        <div class="slideshow-container">
+            <div class="mySlides">
+                <q>Deepak builds his own skills to code high level competencies in python and c++ programming. He has leadership qualities and works with ease in development environment. His learning and performance will take him great heights in future.</q>
+                <p class="author">- Krithika R | Systems Engineer TCS</p>
+            </div>
+
+            <div class="mySlides">
+              <q>Deepak Velmurugan,has been excellent in Python and C# coding logic and most importantly his positive and never give up attitude. He is the guy, who can adapt and work easily in any new technologies with his strong programming concepts.</q>
+              <p class="author">- Mohammed Sohail | Associate Principal LTI</p>
+            </div>
+                        
+            <div class="mySlides">
+              <q>Deepak is a very good instructor, he chose all the good topics to discuss and code, it was very innovative and we got a lot to learn.</q>
+              <p class="author">- Riddhi<span style="color: black;">(one of my students)</span> | Software Engineer LTI</p>
+            </div>
+            
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+            
+        </div>
+            
+            <div class="dot-container">
+              <span class="dot" onclick="currentSlide(1)"></span> 
+              <span class="dot" onclick="currentSlide(2)"></span> 
+              <span class="dot" onclick="currentSlide(3)"></span> 
+            </div>
+            <br>
+            <div class="resume">
+                <a href="https://drive.google.com/file/d/1O4ISaoBRmO4uwYyP_J6ERdTSXo-_IXk9/view">View my resume</a>
+            </div>
+            <br>
+            <br>
+            <div class="social-icons">
+                <a href="mailto:deepazlions@gmail.com" class="fa fa-google"></a>
+                <a href="https://www.linkedin.com/in/deepakvelmurugan/" class="fa fa-linkedin"></a>
+            </div>
+
+    </div>
+    <script>
+        //sticky nav
+        window.onscroll = function() {myFunction()};
+        var navbar = document.getElementsByClassName("inner-navbar")[0];
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+        } else {
+            navbar.classList.remove("sticky");
+        }
+        }
+        //on button press go to div
+        $("#btns_more").click(function(){
+            var variable = $("#Work").html();
+            variable = "." + variable.split(" ")[0];
+            $('html,body').animate({
+                scrollTop: $(variable).offset().top},
+                'slow');
+        });
+        $("#Intro").click(function() {
+        var variable = $("#Intro").html();
+        variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        $("#Work").click(function() {
+            var variable = $("#Work").html();
+            variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        $("#Projects").click(function() {
+            var variable = $("#Projects").html();
+            variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        $("#Contact").click(function() {
+            var variable = $("#Contact").html();
+            variable = "." + variable.split(" ")[0];
+        $('html,body').animate({
+            scrollTop: $(variable).offset().top},
+            'slow');
+        });
+        //carousel
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+        showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+        showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}    
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " active";
+        }
+    </script>
+</body>
+{% endblock %}

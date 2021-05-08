@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel = "icon" type = "image/x-icon" href = "icon.ico" >
+    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGlgSAC0taQAST0iAA4AAABNQSYgPTARgTkqCtw6KwraQjQVTC4cAAD///8Ao6LUAAAAAAAAAAAAAAAAAAAAAACEf2sA////AExAJh0+MBJ0NygI0jIjAvwxIgD/MiMA/zoqCb9nWBkMJiB9AAAAoABVUrYAAAAAAAAAAAAAAAAAPjERAEI1Fi43KAnPMyMC/zEhAP8wIQD+LyAC/iocA/8gFA31FBF7lxsatCYLCqcAAgOiAAAAAAAAAAAAsqycADUmBQA5KwxWMiIC/i8hAP4uIAH+KBoD/hkOBP4LAwL+BgAN/wMCif8KCauyKCapCyMhqQAAAAAAAAAAAGRcSAAvHgAANygKbTAhAf8sHgL+Gg4E/gsDAv4GAAH+BgAA/gYBFP4CAZP/AwOr7RMTqDEREKgAAAAAAAAAAACDfWwAIxEAADUmCIYvIQH/JhkD/ggBAv4GAAH+BgAB/gYAAP4GASz+AQCj/wICqvUODahACwmoAAAAAAAAAAAAUUcwAP///wA0JQWeLyEA/yMWA/4HAQH+BgAB/gYAAf4GAAD+BAJY/gAArP8CAqrwERCoNQ8OqAAAAAAAAAAAAEQ3HgBHOiIGMyQEti8hAP8eEwL+BgAB/gYAAf4GAAD+BgEU/gIBjf4AAK3/BASq1xUUrxgcG5oAQEBAAAAAAAA/MRUAPzEVDzMkBMouIAD/Gg8D/gYAAf4GAAH+BgAA/gUCUv4BAaP+BAOK/w0NgLdEREszTU1JB0pKSgAAAAAAOy0QADstEBwzIwPcLiAB/xYMA/4FAAH+BgAA/gYCK/4CAZn+AQGm/wUEkfUVFHBnOzwuJ0RERAVBQUEAAAAAADgqCwA5KwwtMiMC6y4gAf8TCgL+BgAA/gYCIv4DAon+AACs/gAAqv8IB6q0JiTBCzAwYQBBQEAAQEBAAAAAAAA4KQgAOisLQjMkAvcuHwH/DwgP/gUBQ/4DApD+AACr/gAAqv8EBKnmExKoOwoJqQALCakAT09PAAAAAAAAAAAANygEADssCls2JwPkLSEcrwgFgu8BAKf/AACs/gAAqv8DA6rxDw6oYwAAogA/PasAVFawAAAAAAAAAAAAAAAAADssCgBCNBQuQTIHMBUUpjUDAqztAACq/wEBqv8GBqnWDw+oW1xcpAImJagALy2rAAAAAAAAAAAAAAAAAAAAAAA4KAUANSUBAB0WagANDalJAwOp9wUFqdUMDKl4GhmpHwAApgAnKKgAIyOoAAAAAAAAAAAAAAAAAAAAAAAAAAAAjoh3AJCKdwAMC6UAExKkSw0MpogYF6cjAACpABcWqQB/hbYAOTuuAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAMAAMABAADAAQAAgAEAAIABAACAAQAAgAEAAIAAAACAAAAAgAAAAIAAAACAAQAAgAMAAIAHAACADwAAgB8AAA==" rel="icon" type="image/x-icon" />
+    {% block head %}
+    <style>
+    .navbar ul {
+        align-items: center;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: rgb(0, 0, 0);
+        -webkit-transition: background-color 2s ease-out;
+        -moz-transition: background-color 2s ease-out;
+        -o-transition: background-color 2s ease-out;
+        transition: background-color 2s ease-out;
+    
+    }
+    .navbar ul:hover{
+        background-color: rgb(179, 39, 39);
+    }
+    .navbar li {
+        float: left;
+    }
+    
+    .navbar li a {
+        display: block;
+        color:gainsboro;
+        text-align: center;
+        padding: 16px;
+        text-decoration: none;
+    }
+    .navbar li p{
+        display: block;
+        color:gainsboro;
+        text-align: center;
+        text-decoration: none;
+    }
+    .navbar li a:hover {
+        color: white;
+    }
+    </style>
+    {% endblock %}
+</head>
+<body>
+        <div class="navbar">    
+          <ul>
+            <li><a href="/"><img src="data:image/x-icon;base64,AAABAAEAGRkAAAEAIABQCgAAFgAAACgAAAAZAAAAMgAAAAEAIAAAAAAAxAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADw7uUA+/r3APj28gD9/fwA////AP39/Cv+/v2L/v7+1/7+/t/+/v2J/Pv6EP39/AD8/PsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOXe0AD49/UA9PPvAP39/AD///8A/f38KP7+/Yb///7d/////////////////////f79/YDq5N8B+/r5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD9/fwA/Pz7AP///wD8/Psp/v79h////uD///////////////////////////////////7e/Pz7Hv38/QDy8/sA9vb8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/Pv6APz7+Q39/f2C//7+4f//////////////////////////////////////////////+/7+/oL8/P4k////APX1/ADy8vwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP79/QD9/fw0////8//////////////////////////////////////////////////////////+/v7/3/z8/lT///8A5+b6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD+/v4A/v79R/////n////////////////////////////////////////////////////////////////+/v/a+/v+Ivz8/gDW2foAAAAAAAAAAAAAAAAAAAAAAAAAAADt7eoA////AP7+/V7////+//////////////////////////////////////////////////////////////////////39/2b///8A///7AAAAAAAAAAAAAAAAAAAAAAAAAAAA////AP///wD+/v54///////////////////////////////////////////////////////////////////////////+/v+T////AOvs+QAAAAAAAAAAAAAAAAAAAAAAAAAAAPj39gD///8A//7+kv//////////////////////////////////////////////////////////////////////////////n////wD9/f4AAAAAAAAAAAAAAAAAAAAAAAAAAAD7+/oA+fj3Av///6j//////////////////////////////////////////////////////////////////////////////5r///8A+/v+AAAAAAAAAAAAAAAAAAAAAAAAAAAA/Pz7APz8+wn///++///////////////////////////////////////////////////////////////////////////+/v+A////AOTl+wAAAAAAAAAAAAAAAAAAAAAAAAAAAP7+/QD+/v0U////0//////////////////////////////////////////////////////////////////////////8/f3+VP7+/wDt7OcA6urqAAAAAAAAAAAAAAAAAAAAAAD+/v0A/v79I////+T//////////////////////////////////////////////////////////////////////v7/5Pv7/ib///8A////AP///wAAAAAAAAAAAAAAAAAAAAAA/v7+AP7+/jT////w//////////////////////////////////////////////////////////////////////7+/sf5+fpW9vb2S/f39wf39/cAAAAAAAAAAAAAAAAAAAAAAP///gD+/v5K////+f////////////////////////////////////////////////////////////////////n+/v6D+/v7Wvn5+T/7+/sE+vr6AAAAAAAAAAAAAAAAAOro4QD///8A/v7+Yv/////////////////////////////////////////////////////////////////////+/v/I+fn9Ffn59wL///8A+fn5APv7+wAAAAAAAAAAAAAAAAD///8A////AP7+/nv////////////////////////////////////////////////////////////////////6/Pz+X////wD4+PkA////AP7+/gAAAAAAAAAAAAAAAAAAAAAA9vXzAP///wD+/v6V/////////////////////////////////////////////////////////////////f3/rfb2/Qv4+P0A7u/8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPz8/AD8/PsE////sP///////////////////////////////////////////////////////////v7/2fn5/S37+/4A+/r+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD9/f0A/f39Df///8r/////////1v7+/rH////6/////////////////////////////////v7/6fv7/kz///8A2Nr2APT2/QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/f38AP39/Rf+/v6w/v7+ev39/Bz9/f9X/////f///////////////////////////v7/4Pz8/lP///8A9PX9APP0/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPv6+QD7+/oH+/v6Fv///wD///4A/f7/dP/////////////////////////0/v7/rfz8/jT///8A9vb9APX2/QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8/PsA/Pz7APz7+wD19fYA////AP7+/47///////////////P+/v+v/Pz+Sff3/Qn9/f8A7u78APX1/QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9/f+AO3t/AH+/v+m////9v7+/6z9/f5G+Pj8CP7+/wD5+f4A/fz/AOrr+QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPz8/gD9/f4G/f3/f/39/1X4+P0J////APn5/QD+/f4A6+34AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/AAfgPAAH4DwAAeA8AADgPAAA4DwAAGA4AABgOAAAYDgAAGA4AABgOAAAYDgAACA4AAAgOAAAIDgAACAwAAAgMAAAYDAAAeAwAAPgMAAD4DAAB+AwAA/gMAAf4D4AP+A+AP/gA==" height="20"></a></li>
+            <li><a href="/fc">FC</a></li>
+            <li><a href="/conv">Conv</a></li>
+            <li><a href="/about">About</a></li>
+          </ul>
+          </div>
+          {% block content %}{% endblock %}
+</body>
+</html>
